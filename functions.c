@@ -6,25 +6,29 @@
 /*   By: martmar2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 18:48:02 by martmar2          #+#    #+#             */
-/*   Updated: 2023/12/18 18:53:04 by martmar2         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:28:07 by martmar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putchar(char c)
 {
-	write(fd, &c, 1);
+	int count;
+
+	count = 1;
+	write(1, &c, 1);
 }
 
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
+	int	count;
 
 	i = 0;
 	while (s[i] != 0)
 	{
-		ft_putchar_fd(s[i],fd);
+		ft_putchar(s[i]);
 		i++;
 	}
 }
@@ -47,4 +51,90 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(n / 10, fd);
 	num = n % 10 + '0';
 	write(fd, &num, 1);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	n;
+
+	n = 0;
+	while (s[n] != '\0')
+		n++;
+	return (n);
+}
+
+static int	ft_intlen(int a)
+{
+	int	count;
+
+	count = 0;
+	if (a < 0)
+	{
+		count++;
+		a = -a;
+	}
+	while (a > 9)
+	{
+		a = (a / 10);
+		count++;
+	}
+	return (count + 1);
+}
+static int	ft_unsignedintlen (unsigned int a)
+{
+	int	count;
+
+	count = 0;
+	while (a > 9)
+	{
+		a = (a / 10);
+		count++;
+	}
+	return (count + 1);
+}
+
+void ft_caphexad(unsigned long n)
+{
+	if (n < 10)
+		ft_putchar(n + '0');
+	if (n == 10)
+		ft_putchar('A');
+	if (n == 11)
+		ft_putchar('B');
+	if (n == 12)
+		ft_putchar('C');
+	if (n == 13)
+		ft_putchar('D');
+	if (n == 14)
+		ft_putchar('E');
+	if (n == 15)
+		ft_putchar('F');
+	if (n > 15)
+	{
+		ft_caphexad(n / 16);
+		ft_caphexad(n % 16);
+	}
+}
+
+void ft_lowhexad(unsigned long n)
+{
+	if (n < 10)
+		ft_putchar(n + '0');
+	if (n == 10)
+		ft_putchar('a');
+	if (n == 11)
+		ft_putchar('b');
+	if (n == 12)
+		ft_putchar('c');
+	if (n == 13)
+		ft_putchar('d');
+	if (n == 14)
+		ft_putchar('e');
+	if (n == 15)
+		ft_putchar('f');
+	if (n > 15)
+	{
+		ft_lowhexad(n / 16);
+		ft_lowhexad(n % 16);
+	}
 }
