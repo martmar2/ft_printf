@@ -6,11 +6,12 @@
 /*   By: martmar2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 18:48:02 by martmar2          #+#    #+#             */
-/*   Updated: 2024/01/10 18:28:07 by martmar2         ###   ########.fr       */
+/*   Updated: 2024/01/13 18:57:11 by martmar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <limits.h>
 
 void	ft_putchar(char c)
 {
@@ -23,8 +24,9 @@ void	ft_putchar(char c)
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
-	int	count;
 
+	(void) fd;
+	// quitar el parametro fd
 	i = 0;
 	while (s[i] != 0)
 	{
@@ -53,6 +55,16 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &num, 1);
 }
 
+void	ft_putnbr_unsigned_fd(unsigned int n, int fd)
+{
+	char	num;
+
+	if (n > 9)
+		ft_putnbr_unsigned_fd(n / 10, fd);
+	num = n % 10 + '0';
+	write(fd, &num, 1);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	n;
@@ -63,11 +75,13 @@ size_t	ft_strlen(const char *s)
 	return (n);
 }
 
-static int	ft_intlen(int a)
+int	ft_intlen(int a)
 {
 	int	count;
 
 	count = 0;
+	if (a == INT_MIN)
+		return (11);
 	if (a < 0)
 	{
 		count++;
@@ -80,7 +94,8 @@ static int	ft_intlen(int a)
 	}
 	return (count + 1);
 }
-static int	ft_unsignedintlen (unsigned int a)
+
+int	ft_unsignedintlen(unsigned int a)
 {
 	int	count;
 
@@ -137,4 +152,19 @@ void ft_lowhexad(unsigned long n)
 		ft_lowhexad(n / 16);
 		ft_lowhexad(n % 16);
 	}
+}
+
+int ft_hexadlen(unsigned long n)
+{
+    int count = 0;
+
+    while (n > 0)
+    {
+        count++;
+        n = n / 16;
+    }
+
+    if (count == 0)
+		return (1);
+	return (count);
 }
