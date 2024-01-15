@@ -4,7 +4,11 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 SRC = 	ft_printf.c \
-		functions.c
+		ft_length.c \
+		ft_words.c \
+		ft_numbers.c \
+		ft_printnumbers.c \
+		ft_printwords.c \
 
 OBJ = $(SRC:.c=.o)
 

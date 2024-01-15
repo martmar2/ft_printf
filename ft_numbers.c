@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_numbers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martmar2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 18:48:02 by martmar2          #+#    #+#             */
-/*   Updated: 2024/01/13 18:57:11 by martmar2         ###   ########.fr       */
+/*   Created: 2024/01/15 19:56:29 by martmar2          #+#    #+#             */
+/*   Updated: 2024/01/15 20:49:52 by martmar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <limits.h>
-
-void	ft_putchar(char c)
-{
-	int count;
-
-	count = 1;
-	write(1, &c, 1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	(void) fd;
-	// quitar el parametro fd
-	i = 0;
-	while (s[i] != 0)
-	{
-		ft_putchar(s[i]);
-		i++;
-	}
-}
+#include "ft_printf.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -65,50 +44,7 @@ void	ft_putnbr_unsigned_fd(unsigned int n, int fd)
 	write(fd, &num, 1);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	n;
-
-	n = 0;
-	while (s[n] != '\0')
-		n++;
-	return (n);
-}
-
-int	ft_intlen(int a)
-{
-	int	count;
-
-	count = 0;
-	if (a == INT_MIN)
-		return (11);
-	if (a < 0)
-	{
-		count++;
-		a = -a;
-	}
-	while (a > 9)
-	{
-		a = (a / 10);
-		count++;
-	}
-	return (count + 1);
-}
-
-int	ft_unsignedintlen(unsigned int a)
-{
-	int	count;
-
-	count = 0;
-	while (a > 9)
-	{
-		a = (a / 10);
-		count++;
-	}
-	return (count + 1);
-}
-
-void ft_caphexad(unsigned long n)
+void	ft_caphexad(unsigned long n)
 {
 	if (n < 10)
 		ft_putchar(n + '0');
@@ -131,7 +67,7 @@ void ft_caphexad(unsigned long n)
 	}
 }
 
-void ft_lowhexad(unsigned long n)
+void	ft_lowhexad(unsigned long n)
 {
 	if (n < 10)
 		ft_putchar(n + '0');
@@ -152,19 +88,4 @@ void ft_lowhexad(unsigned long n)
 		ft_lowhexad(n / 16);
 		ft_lowhexad(n % 16);
 	}
-}
-
-int ft_hexadlen(unsigned long n)
-{
-    int count = 0;
-
-    while (n > 0)
-    {
-        count++;
-        n = n / 16;
-    }
-
-    if (count == 0)
-		return (1);
-	return (count);
 }
